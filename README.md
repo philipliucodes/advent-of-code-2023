@@ -2,9 +2,7 @@
 
 adventofcode.com/2023
 
-Solutions:
-
-Day 2:
+Day 2 Solutions:
 
 Part 1:
 
