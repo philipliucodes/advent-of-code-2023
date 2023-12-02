@@ -1,6 +1,6 @@
 # Advent of Code 2023
 
-[Advent of Code](adventofcode.com/2023)
+[adventofcode.com](adventofcode.com/2023)
 
 Day 2 Solutions:
 
