@@ -2,6 +2,8 @@
 
 [adventofcode.com](adventofcode.com/2023)
 
+This repository contains my solutions to the Advent of Code 2023 challenges. My solutions won't be the cleanest, but they get the job done. Happy holidays!
+
 ## Day 2 Solutions:
 
 ### Part 1:
