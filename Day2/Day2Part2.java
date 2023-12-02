@@ -52,7 +52,6 @@ public class Day2Part2 {
                         green = amount;
 
                     }
-
                 }
             }
         }

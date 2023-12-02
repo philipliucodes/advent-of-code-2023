@@ -17,39 +17,38 @@ public class Day2Part1 {
 
             for (String bluh : bleh) {
 
-            String[] num = bluh.split(" ");
+                String[] num = bluh.split(" ");
 
-            if (num[2].contains("red")) {
+                if (num[2].contains("red")) {
 
-                int amount = Integer.parseInt(num[1]);
+                    int amount = Integer.parseInt(num[1]);
 
-                if (amount > 12) {
+                    if (amount > 12) {
 
-                    return 0;
+                        return 0;
 
+                    }
+
+                } else if (num[2].contains("blue")) {
+
+                    int amount = Integer.parseInt(num[1]);
+
+                    if (amount > 14) {
+
+                        return 0;
+
+                    }
+
+                } else if (num[2].contains("green")) {
+
+                    int amount = Integer.parseInt(num[1]);
+
+                    if (amount > 13) {
+
+                        return 0;
+
+                    }
                 }
-
-            } else if (num[2].contains("blue")) {
-
-                int amount = Integer.parseInt(num[1]);
-
-                if (amount > 14) {
-
-                    return 0;
-
-                }
-
-            } else if (num[2].contains("green")) {
-
-                int amount = Integer.parseInt(num[1]);
-
-                if (amount > 13) {
-
-                    return 0;
-
-                }
-
-            }
             }
         }
 
