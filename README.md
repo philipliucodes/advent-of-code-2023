@@ -1,8 +1,10 @@
-# Advent of Code 2023
+![image](https://github.com/philipliucodes/advent-of-code-2023/assets/143216542/87d27ee0-feae-4c75-935b-98cef115475b)# Advent of Code 2023
 
 [adventofcode.com](adventofcode.com/2023)
 
 This repository contains my solutions to the Advent of Code 2023 challenges. My solutions won't be the cleanest, but they get the job done. Happy holidays!
+
+![image](https://github.com/philipliucodes/advent-of-code-2023/assets/143216542/b2deb1f8-4281-419d-8b51-5ccf488372c2)
 
 ## Day 2 Solutions:
 
