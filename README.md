@@ -1,4 +1,4 @@
-![image](https://github.com/philipliucodes/advent-of-code-2023/assets/143216542/87d27ee0-feae-4c75-935b-98cef115475b)# Advent of Code 2023
+# Advent of Code 2023
 
 [adventofcode.com](adventofcode.com/2023)
 
