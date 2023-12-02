@@ -2,9 +2,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Day2Part1 {
+public class Day2Part2 {
 
     public static int isPossible(String input) {
+
+        int blue = 0;
+        int green = 0;
+        int red = 0;
 
         String[] game = input.split(":");
         int id = Integer.parseInt(game[0].substring(5));
@@ -17,43 +21,43 @@ public class Day2Part1 {
 
             for (String bluh : bleh) {
 
-            String[] num = bluh.split(" ");
+                String[] num = bluh.split(" ");
 
-            if (num[2].contains("red")) {
+                if (num[2].contains("red")) {
 
-                int amount = Integer.parseInt(num[1]);
+                    int amount = Integer.parseInt(num[1]);
 
-                if (amount > 12) {
+                    if (amount > red) {
 
-                    return 0;
+                        red = amount;
+
+                    }
+
+                } else if (num[2].contains("blue")) {
+
+                    int amount = Integer.parseInt(num[1]);
+
+                    if (amount > blue) {
+
+                        blue = amount;
+
+                    }
+
+                } else if (num[2].contains("green")) {
+
+                    int amount = Integer.parseInt(num[1]);
+
+                    if (amount > green) {
+
+                        green = amount;
+
+                    }
 
                 }
-
-            } else if (num[2].contains("blue")) {
-
-                int amount = Integer.parseInt(num[1]);
-
-                if (amount > 14) {
-
-                    return 0;
-
-                }
-
-            } else if (num[2].contains("green")) {
-
-                int amount = Integer.parseInt(num[1]);
-
-                if (amount > 13) {
-
-                    return 0;
-
-                }
-
-            }
             }
         }
 
-        return id;
+        return blue * green * red;
 
     }
 
