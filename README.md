@@ -2,9 +2,9 @@
 
 [adventofcode.com](adventofcode.com/2023)
 
-##Day 2 Solutions:
+## Day 2 Solutions:
 
-###Part 1:
+### Part 1:
 
 ```
 import java.io.BufferedReader;
@@ -85,7 +85,7 @@ public class Day2Part1 {
 }
 ```
 
-###Part 2:
+### Part 2:
 
 ```
 import java.io.BufferedReader;
