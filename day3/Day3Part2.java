@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//THIS DOES NOT WORK, I DID NOT COMPLETELY FINISH THIS ONE
+
 public class Day3Part2 {
 
     private static HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+    private static HashMap<int[], ArrayList<Integer>> gearMap = new HashMap<>();
 
     public static void createMap(int row, String input) {
 
@@ -14,9 +17,10 @@ public class Day3Part2 {
 
         for (int i = 0; i < input.length(); i++) {
 
-            if (!Character.isDigit(input.charAt(i)) && input.charAt(i) != '.') {
+            if (input.charAt(i) == '*') {
 
                 list.add(i);
+                gearMap.put(new int[]{row, i}, new ArrayList<>());
 
             }
         }
@@ -25,11 +29,10 @@ public class Day3Part2 {
 
     }
 
-    public static int buildSumFromEachRow(int row, String input, int tableLength) {
+    public static void buildSumFromEachRow(int row, String input, int tableLength) {
 
         int[] range = {-1, -1};
         boolean started = false;
-        int sum = 0;
 
         for (int i = 0; i < input.length(); i++) {
 
@@ -59,30 +62,22 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    valid = true;
+                                    gearMap.put(new int[]{row, i}, gearMap.get(new int[]{row, i}).add(Integer.parseInt(input.substring(range[0], range[1] + 1))));
 
                                 }
                             }
                         }
 
-                        if (!map.get(row + 1).isEmpty() && !valid) {
+                        if (!map.get(row + 1).isEmpty()) {
 
                             for (int num : map.get(row + 1)) {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    valid = true;
+                                    gearMap.put(new int[]{row + 1, i}, gearMap.get(new int[]{row + 1, i}) + 1);
 
                                 }
                             }
-                        }
-
-                        if (valid) {
-
-                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
-
-                            valid = false;
-
                         }
 
                     } else if (row == tableLength) {
@@ -93,30 +88,22 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    valid = true;
+                                    gearMap.put(new int[]{row - 1, i}, gearMap.get(new int[]{row - 1, i}) + 1);
 
                                 }
                             }
                         }
 
-                        if (!map.get(row).isEmpty() && !valid) {
+                        if (!map.get(row).isEmpty()) {
 
                             for (int num : map.get(row)) {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    valid = true;
+                                    gearMap.put(new int[]{row, i}, gearMap.get(new int[]{row, i}) + 1);
 
                                 }
                             }
-                        }
-
-                        if (valid) {
-
-                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
-
-                            valid = false;
-
                         }
 
                     } else {
@@ -127,42 +114,34 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    valid = true;
+                                    gearMap.put(new int[]{row, i}, gearMap.get(new int[]{row, i}) + 1);
 
                                 }
                             }
                         }
 
-                        if (!map.get(row - 1).isEmpty() && !valid) {
+                        if (!map.get(row - 1).isEmpty()) {
 
                             for (int num : map.get(row - 1)) {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    valid = true;
+                                    gearMap.put(new int[]{row - 1, i}, gearMap.get(new int[]{row - 1, i}) + 1);
 
                                 }
                             }
                         }
 
-                        if (!map.get(row + 1).isEmpty() && !valid) {
+                        if (!map.get(row + 1).isEmpty()) {
 
                             for (int num : map.get(row + 1)) {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    valid = true;
+                                    gearMap.put(new int[]{row + 1, i}, gearMap.get(new int[]{row + 1, i}) + 1);
 
                                 }
                             }
-                        }
-
-                        if (valid) {
-
-                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
-
-                            valid = false;
-
                         }
                     }
                 }
@@ -182,13 +161,13 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    valid = true;
+                                    gearMap.put(new int[]{row, i}, gearMap.get(new int[]{row, i}) + 1);
 
                                 }
                             }
                         }
 
-                        if (!map.get(row + 1).isEmpty() && !valid) {
+                        if (!map.get(row + 1).isEmpty()) {
 
                             for (int num : map.get(row + 1)) {
 
@@ -198,14 +177,6 @@ public class Day3Part2 {
 
                                 }
                             }
-                        }
-
-                        if (valid) {
-
-                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
-
-                            valid = false;
-
                         }
 
                     } else if (row == tableLength) {
@@ -222,7 +193,7 @@ public class Day3Part2 {
                             }
                         }
 
-                        if (!map.get(row).isEmpty() && !valid) {
+                        if (!map.get(row).isEmpty()) {
 
                             for (int num : map.get(row)) {
 
@@ -232,14 +203,6 @@ public class Day3Part2 {
 
                                 }
                             }
-                        }
-
-                        if (valid) {
-
-                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
-
-                            valid = false;
-
                         }
 
                     } else {
@@ -256,7 +219,7 @@ public class Day3Part2 {
                             }
                         }
 
-                        if (!map.get(row - 1).isEmpty() && !valid) {
+                        if (!map.get(row - 1).isEmpty()) {
 
                             for (int num : map.get(row - 1)) {
 
@@ -268,7 +231,7 @@ public class Day3Part2 {
                             }
                         }
 
-                        if (!map.get(row + 1).isEmpty() && !valid) {
+                        if (!map.get(row + 1).isEmpty()) {
 
                             for (int num : map.get(row + 1)) {
 
@@ -279,21 +242,10 @@ public class Day3Part2 {
                                 }
                             }
                         }
-
-                        if (valid) {
-
-                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
-
-                            valid = false;
-
-                        }
                     }
                 }
             }
         }
-
-        return sum;
-
     }
 
     public static void main(String[] args) throws IOException {
@@ -321,7 +273,7 @@ public class Day3Part2 {
 
         while (input != null) {
 
-            sum += buildSumFromEachRow(row, input, tableLength);
+            buildSumFromEachRow(row, input, tableLength);
             input = bufferedReader2.readLine();
             row++;
 
