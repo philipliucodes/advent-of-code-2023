@@ -9,7 +9,6 @@ import java.util.HashMap;
 public class Day3Part2 {
 
     private static HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
-    private static HashMap<int[], ArrayList<Integer>> gearMap = new HashMap<>();
 
     public static void createMap(int row, String input) {
 
@@ -20,7 +19,6 @@ public class Day3Part2 {
             if (input.charAt(i) == '*') {
 
                 list.add(i);
-                gearMap.put(new int[]{row, i}, new ArrayList<>());
 
             }
         }
@@ -62,7 +60,6 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    gearMap.put(new int[]{row, i}, gearMap.get(new int[]{row, i}).add(Integer.parseInt(input.substring(range[0], range[1] + 1))));
 
                                 }
                             }
@@ -74,7 +71,6 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    gearMap.put(new int[]{row + 1, i}, gearMap.get(new int[]{row + 1, i}) + 1);
 
                                 }
                             }
@@ -88,7 +84,6 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    gearMap.put(new int[]{row - 1, i}, gearMap.get(new int[]{row - 1, i}) + 1);
 
                                 }
                             }
@@ -100,7 +95,6 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    gearMap.put(new int[]{row, i}, gearMap.get(new int[]{row, i}) + 1);
 
                                 }
                             }
@@ -114,7 +108,6 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    gearMap.put(new int[]{row, i}, gearMap.get(new int[]{row, i}) + 1);
 
                                 }
                             }
@@ -126,7 +119,6 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    gearMap.put(new int[]{row - 1, i}, gearMap.get(new int[]{row - 1, i}) + 1);
 
                                 }
                             }
@@ -138,7 +130,6 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    gearMap.put(new int[]{row + 1, i}, gearMap.get(new int[]{row + 1, i}) + 1);
 
                                 }
                             }
@@ -161,7 +152,6 @@ public class Day3Part2 {
 
                                 if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                                    gearMap.put(new int[]{row, i}, gearMap.get(new int[]{row, i}) + 1);
 
                                 }
                             }
