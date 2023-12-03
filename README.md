@@ -6,7 +6,7 @@ This repository contains my solutions to the Advent of Code 2023 challenges. My 
 
 ![image](https://github.com/philipliucodes/advent-of-code-2023/assets/143216542/b2deb1f8-4281-419d-8b51-5ccf488372c2)
 
-## Day 2 Solutions:
+## Day 3 Solutions:
 
 ### Part 1:
 
@@ -14,72 +14,329 @@ This repository contains my solutions to the Advent of Code 2023 challenges. My 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Day2Part1 {
+public class Day3Part1 {
 
-    public static int isPossible(String input) {
+    private static HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
 
-        String[] game = input.split(":");
-        int id = Integer.parseInt(game[0].substring(5));
+    public static void createMap(int row, String input) {
 
-        String[] colors = game[1].split(";");
+        ArrayList<Integer> list = new ArrayList<>();
 
-        for (String color : colors) {
+        for (int i = 0; i < input.length(); i++) {
 
-            String[] bleh = color.split(",");
+            if (!Character.isDigit(input.charAt(i)) && input.charAt(i) != '.') {
 
-            for (String bluh : bleh) {
+                list.add(i);
 
-                String[] num = bluh.split(" ");
+            }
+        }
 
-                if (num[2].contains("red")) {
+        map.put(row, list);
 
-                    int amount = Integer.parseInt(num[1]);
+    }
 
-                    if (amount > 12) {
+    public static int buildSumFromEachRow(int row, String input, int tableLength) {
 
-                        return 0;
+        int[] range = {-1, -1};
+        boolean started = false;
+        int sum = 0;
 
+        for (int i = 0; i < input.length(); i++) {
+
+            boolean valid = false;
+
+            if (Character.isDigit(input.charAt(i)) && i != input.length() - 1) {
+
+                if (!started) {
+
+                    started = true;
+                    range[0] = i;
+
+                }
+
+            } else if (i == input.length() - 1 && Character.isDigit(input.charAt(i))) {
+
+                if (started) {
+
+                    started = false;
+                    range[1] = i;
+
+                    if (row == 1) {
+
+                        if (!map.get(row).isEmpty()) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row + 1).isEmpty() && !valid) {
+
+                            for (int num : map.get(row + 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (valid) {
+
+                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
+
+                            valid = false;
+
+                        }
+
+                    } else if (row == tableLength) {
+
+                        if (!map.get(row - 1).isEmpty()) {
+
+                            for (int num : map.get(row - 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row).isEmpty() && !valid) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (valid) {
+
+                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
+
+                            valid = false;
+
+                        }
+
+                    } else {
+
+                        if (!map.get(row).isEmpty()) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row - 1).isEmpty() && !valid) {
+
+                            for (int num : map.get(row - 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row + 1).isEmpty() && !valid) {
+
+                            for (int num : map.get(row + 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (valid) {
+
+                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
+
+                            valid = false;
+
+                        }
                     }
+                }
 
-                } else if (num[2].contains("blue")) {
+            } else {
 
-                    int amount = Integer.parseInt(num[1]);
+                if (started) {
 
-                    if (amount > 14) {
+                    started = false;
+                    range[1] = i - 1;
 
-                        return 0;
+                    if (row == 1) {
 
-                    }
+                        if (!map.get(row).isEmpty()) {
 
-                } else if (num[2].contains("green")) {
+                            for (int num : map.get(row)) {
 
-                    int amount = Integer.parseInt(num[1]);
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                    if (amount > 13) {
+                                    valid = true;
 
-                        return 0;
+                                }
+                            }
+                        }
 
+                        if (!map.get(row + 1).isEmpty() && !valid) {
+
+                            for (int num : map.get(row + 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (valid) {
+
+                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
+
+                            valid = false;
+
+                        }
+
+                    } else if (row == tableLength) {
+
+                        if (!map.get(row - 1).isEmpty()) {
+
+                            for (int num : map.get(row - 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row).isEmpty() && !valid) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (valid) {
+
+                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
+
+                            valid = false;
+
+                        }
+
+                    } else {
+
+                        if (!map.get(row).isEmpty()) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row - 1).isEmpty() && !valid) {
+
+                            for (int num : map.get(row - 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row + 1).isEmpty() && !valid) {
+
+                            for (int num : map.get(row + 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (valid) {
+
+                            sum += Integer.parseInt(input.substring(range[0], range[1] + 1));
+
+                            valid = false;
+
+                        }
                     }
                 }
             }
         }
 
-        return id;
+        return sum;
 
     }
 
     public static void main(String[] args) throws IOException {
 
         int sum = 0;
+        int row = 1;
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader("input.txt"));
         String input = bufferedReader.readLine();
 
         while (input != null) {
 
-            sum += isPossible(input);
+            createMap(row, input);
             input = bufferedReader.readLine();
+            row++;
+
+        }
+
+        int tableLength = row - 1;
+
+        row = 1;
+
+        BufferedReader bufferedReader2 = new BufferedReader(new FileReader("input.txt"));
+        input = bufferedReader2.readLine();
+
+        while (input != null) {
+
+            sum += buildSumFromEachRow(row, input, tableLength);
+            input = bufferedReader2.readLine();
+            row++;
 
         }
 
