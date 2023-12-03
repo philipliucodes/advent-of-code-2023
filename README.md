@@ -352,76 +352,271 @@ public class Day3Part1 {
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Day2Part2 {
+//THIS DOES NOT WORK, I DID NOT COMPLETELY FINISH THIS ONE
 
-    public static int isPossible(String input) {
+public class Day3Part2 {
 
-        int blue = 0;
-        int green = 0;
-        int red = 0;
+    private static HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
 
-        String[] game = input.split(":");
-        int id = Integer.parseInt(game[0].substring(5));
+    public static void createMap(int row, String input) {
 
-        String[] colors = game[1].split(";");
+        ArrayList<Integer> list = new ArrayList<>();
 
-        for (String color : colors) {
+        for (int i = 0; i < input.length(); i++) {
 
-            String[] bleh = color.split(",");
+            if (input.charAt(i) == '*') {
 
-            for (String bluh : bleh) {
+                list.add(i);
 
-                String[] num = bluh.split(" ");
+            }
+        }
 
-                if (num[2].contains("red")) {
+        map.put(row, list);
 
-                    int amount = Integer.parseInt(num[1]);
+    }
 
-                    if (amount > red) {
+    public static void buildSumFromEachRow(int row, String input, int tableLength) {
 
-                        red = amount;
+        int[] range = {-1, -1};
+        boolean started = false;
 
+        for (int i = 0; i < input.length(); i++) {
+
+            boolean valid = false;
+
+            if (Character.isDigit(input.charAt(i)) && i != input.length() - 1) {
+
+                if (!started) {
+
+                    started = true;
+                    range[0] = i;
+
+                }
+
+            } else if (i == input.length() - 1 && Character.isDigit(input.charAt(i))) {
+
+                if (started) {
+
+                    started = false;
+                    range[1] = i;
+
+                    if (row == 1) {
+
+                        if (!map.get(row).isEmpty()) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row + 1).isEmpty()) {
+
+                            for (int num : map.get(row + 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+
+                                }
+                            }
+                        }
+
+                    } else if (row == tableLength) {
+
+                        if (!map.get(row - 1).isEmpty()) {
+
+                            for (int num : map.get(row - 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row).isEmpty()) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+
+                                }
+                            }
+                        }
+
+                    } else {
+
+                        if (!map.get(row).isEmpty()) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row - 1).isEmpty()) {
+
+                            for (int num : map.get(row - 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row + 1).isEmpty()) {
+
+                            for (int num : map.get(row + 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+
+                                }
+                            }
+                        }
                     }
+                }
 
-                } else if (num[2].contains("blue")) {
+            } else {
 
-                    int amount = Integer.parseInt(num[1]);
+                if (started) {
 
-                    if (amount > blue) {
+                    started = false;
+                    range[1] = i - 1;
 
-                        blue = amount;
+                    if (row == 1) {
 
-                    }
+                        if (!map.get(row).isEmpty()) {
 
-                } else if (num[2].contains("green")) {
+                            for (int num : map.get(row)) {
 
-                    int amount = Integer.parseInt(num[1]);
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
 
-                    if (amount > green) {
 
-                        green = amount;
+                                }
+                            }
+                        }
 
+                        if (!map.get(row + 1).isEmpty()) {
+
+                            for (int num : map.get(row + 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                    } else if (row == tableLength) {
+
+                        if (!map.get(row - 1).isEmpty()) {
+
+                            for (int num : map.get(row - 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row).isEmpty()) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                    } else {
+
+                        if (!map.get(row).isEmpty()) {
+
+                            for (int num : map.get(row)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row - 1).isEmpty()) {
+
+                            for (int num : map.get(row - 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
+
+                        if (!map.get(row + 1).isEmpty()) {
+
+                            for (int num : map.get(row + 1)) {
+
+                                if (num >= range[0] - 1 && num <= range[1] + 1) {
+
+                                    valid = true;
+
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-
-        return blue * green * red;
-
     }
 
     public static void main(String[] args) throws IOException {
 
         int sum = 0;
+        int row = 1;
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader("input.txt"));
         String input = bufferedReader.readLine();
 
         while (input != null) {
 
-            sum += isPossible(input);
+            createMap(row, input);
             input = bufferedReader.readLine();
+            row++;
+
+        }
+
+        int tableLength = row - 1;
+
+        row = 1;
+
+        BufferedReader bufferedReader2 = new BufferedReader(new FileReader("input.txt"));
+        input = bufferedReader2.readLine();
+
+        while (input != null) {
+
+            buildSumFromEachRow(row, input, tableLength);
+            input = bufferedReader2.readLine();
+            row++;
 
         }
 
