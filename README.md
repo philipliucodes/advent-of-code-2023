@@ -6,7 +6,7 @@ This repository contains my solutions to the Advent of Code 2023 challenges. My 
 
 ![image](https://github.com/philipliucodes/advent-of-code-2023/assets/143216542/b2deb1f8-4281-419d-8b51-5ccf488372c2)
 
-## Day 3 Solutions:
+## Day 4 Solutions:
 
 ### Part 1:
 
