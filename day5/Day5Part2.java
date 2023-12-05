@@ -1,10 +1,13 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
+// doesn't work, runs into OutOfMemory Error
+
 public class Day5Part2 {
+
+    public static HashMap<long[], long[]> seedMap = new HashMap<>();
 
     public static ArrayList<Long> traverseMap(ArrayList<String> ranges, ArrayList<Long> seeds) {
 
@@ -80,16 +83,10 @@ public class Day5Part2 {
                     }
                 }
 
-                System.out.println(seeds);
-
-                System.out.println(seedRanges);
-
                 seedRanges = new ArrayList<>();
 
             }
         }
-
-        System.out.println(seeds);
 
         while (input != null) {
 
