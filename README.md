@@ -6,7 +6,7 @@ This repository contains my solutions to the Advent of Code 2023 challenges. My 
 
 ![image](https://github.com/philipliucodes/advent-of-code-2023/assets/143216542/b2deb1f8-4281-419d-8b51-5ccf488372c2)
 
-## Day 5 Solutions:
+## Day 6 Solutions:
 
 ### Part 1:
 
@@ -14,91 +14,44 @@ This repository contains my solutions to the Advent of Code 2023 challenges. My 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Day5Part1 {
-
-    public static ArrayList<Long> traverseMap(ArrayList<String> ranges, ArrayList<Long> seeds) {
-
-        HashMap<long[], long[]> map = new HashMap<>();
-
-        for (String range : ranges) {
-
-            long[] sources = new long[3];
-
-            for (int i = 0; i < 3; i++) {
-
-                sources[i] = Long.parseLong(range.split(" ")[i]);
-
-            }
-
-            long[] sourceRange = {sources[1], sources[1] + sources[2]};
-            long[] destinationRange = {sources[0], sources[0] + sources[2]};
-
-            map.put(sourceRange, destinationRange);
-
-        }
-
-        for (int i = 0; i < seeds.size(); i++) {
-
-            for (Map.Entry<long[], long[]> entryRange : map.entrySet()) {
-
-                long min = entryRange.getKey()[0];
-                long max = entryRange.getKey()[1];
-
-                if ((seeds.get(i) >= min && seeds.get(i) <= max) || (seeds.get(i) <= min && seeds.get(i) >= max)) {
-
-                    long diff = seeds.get(i) - min;
-                    seeds.set(i, entryRange.getValue()[0] + diff);
-
-                    break;
-
-                }
-            }
-        }
-
-        return seeds;
-
-    }
+public class Day6Part1 {
 
     public static void main(String[] args) throws IOException {
+
+        int product = 1;
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader("input.txt"));
         String input = bufferedReader.readLine();
 
-        ArrayList<Long> seeds = new ArrayList<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(94, 1476);
+        map.put(65, 1029);
+        map.put(92, 1404);
 
-        for (String seed : input.split(":")[1].replaceFirst(" ", "").split(" ")) {
+        for (Map.Entry<Integer, Integer> record : map.entrySet()) {
 
-            seeds.add(Long.parseLong(seed));
+            int count = 0;
 
-        }
+            for (int i = 1; i < record.getKey(); i++) {
 
-        while (input != null) {
+                int distance = (record.getKey() - i) * i;
 
-            input = bufferedReader.readLine();
+                if (distance > record.getValue()) {
 
-            ArrayList<String> ranges = new ArrayList<>();
-
-            while (input != null && !input.isEmpty()) {
-
-                input = bufferedReader.readLine();
-
-                if (input != null && !input.isEmpty()) {
-
-                    ranges.add(input);
+                    count++;
 
                 }
             }
 
-            seeds = traverseMap(ranges, seeds);
+            product *= count;
 
         }
 
-        Collections.sort(seeds);
-
-        System.out.println(seeds.get(0));
+        System.out.println(product);
 
     }
 }
@@ -110,118 +63,35 @@ public class Day5Part1 {
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-// doesn't work, runs into OutOfMemory Error
-
-public class Day5Part2 {
-
-    public static HashMap<long[], long[]> seedMap = new HashMap<>();
-
-    public static ArrayList<Long> traverseMap(ArrayList<String> ranges, ArrayList<Long> seeds) {
-
-        HashMap<long[], long[]> map = new HashMap<>();
-
-        for (String range : ranges) {
-
-            long[] sources = new long[3];
-
-            for (int i = 0; i < 3; i++) {
-
-                sources[i] = Long.parseLong(range.split(" ")[i]);
-
-            }
-
-            long[] sourceRange = {sources[1], sources[1] + sources[2]};
-            long[] destinationRange = {sources[0], sources[0] + sources[2]};
-
-            map.put(sourceRange, destinationRange);
-
-        }
-
-        for (int i = 0; i < seeds.size(); i++) {
-
-            for (Map.Entry<long[], long[]> entryRange : map.entrySet()) {
-
-                long min = entryRange.getKey()[0];
-                long max = entryRange.getKey()[1];
-
-                if ((seeds.get(i) >= min && seeds.get(i) <= max) || (seeds.get(i) <= min && seeds.get(i) >= max)) {
-
-                    long diff = seeds.get(i) - min;
-                    seeds.set(i, entryRange.getValue()[0] + diff);
-
-                    break;
-
-                }
-            }
-        }
-
-        return seeds;
-
-    }
+public class Day6Part2 {
 
     public static void main(String[] args) throws IOException {
+
+        int product = 1;
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader("input.txt"));
         String input = bufferedReader.readLine();
 
-        ArrayList<Long> seeds = new ArrayList<>();
-        ArrayList<Long> seedRanges = new ArrayList<>();
+        int count = 0;
 
-        for (String seed : input.split(":")[1].replaceFirst(" ", "").split(" ")) {
+        for (int i = 1; i < 54946592; i++) {
 
-            seedRanges.add(Long.parseLong(seed));
+            long distance = (long) (54946592 - i) * i / 1000;
 
-            if (seedRanges.size() == 2) {
+            if (distance > 302147610291.404) {
 
-                if (seedRanges.get(0) < seedRanges.get(1)) {
-
-                    for (Long i = seedRanges.get(0); i <= seedRanges.get(1); i++) {
-
-                        seeds.add(i);
-
-                    }
-
-                } else {
-
-                    for (Long i = seedRanges.get(1); i <= seedRanges.get(0); i++) {
-
-                        seeds.add(i);
-
-                    }
-                }
-
-                seedRanges = new ArrayList<>();
+                count++;
 
             }
         }
 
-        while (input != null) {
-
-            input = bufferedReader.readLine();
-
-            ArrayList<String> ranges = new ArrayList<>();
-
-            while (input != null && !input.isEmpty()) {
-
-                input = bufferedReader.readLine();
-
-                if (input != null && !input.isEmpty()) {
-
-                    ranges.add(input);
-
-                }
-            }
-
-            seeds = traverseMap(ranges, seeds);
-
-        }
-
-        Collections.sort(seeds);
-
-        System.out.println(seeds.get(0));
+        System.out.println(count);
 
     }
 }
+
 ```
