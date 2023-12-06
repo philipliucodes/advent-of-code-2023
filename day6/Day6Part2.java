@@ -1,18 +1,6 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Day6Part2 {
 
-    public static void main(String[] args) throws IOException {
-
-        int product = 1;
-
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("input.txt"));
-        String input = bufferedReader.readLine();
+    public static void main(String[] args) {
 
         int count = 0;
 
