@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.*;
 
 // doesn't work, runs into OutOfMemory Error
+// eventually solved it by looking up someone else's solution lol
+// using trees to hold the ranges seems to work well
 
 public class Day5Part2 {
 
