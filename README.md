@@ -6,7 +6,7 @@ This repository contains my solutions to the Advent of Code 2023 challenges. My 
 
 ![image](https://github.com/philipliucodes/advent-of-code-2023/assets/143216542/b2deb1f8-4281-419d-8b51-5ccf488372c2)
 
-## Day 4 Solutions:
+## Day 5 Solutions:
 
 ### Part 1:
 
@@ -14,66 +14,91 @@ This repository contains my solutions to the Advent of Code 2023 challenges. My 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.lang.reflect.Array;
+import java.util.*;
 
-public class Day4Part1 {
+public class Day5Part1 {
 
-    public static int getCardValue(String input) {
+    public static ArrayList<Long> traverseMap(ArrayList<String> ranges, ArrayList<Long> seeds) {
 
-        HashMap<Integer, Integer> map = new HashMap<>();
-        int sum = 0;
+        HashMap<long[], long[]> map = new HashMap<>();
 
-        String[] winningNumbers = input.split(":")[1].split("\\|")[1].split(" ");
-        String[] yourNumbers = input.split(":")[1].split("\\|")[0].split(" ");
+        for (String range : ranges) {
 
-        for (String number : winningNumbers) {
+            long[] sources = new long[3];
 
-            int num = Integer.parseInt(number);
+            for (int i = 0; i < 3; i++) {
 
-            if (!map.containsKey(num)) {
-
-                map.put(num, 1);
+                sources[i] = Long.parseLong(range.split(" ")[i]);
 
             }
+
+            long[] sourceRange = {sources[1], sources[1] + sources[2]};
+            long[] destinationRange = {sources[0], sources[0] + sources[2]};
+
+            map.put(sourceRange, destinationRange);
+
         }
 
-        for (String number : yourNumbers) {
+        for (int i = 0; i < seeds.size(); i++) {
 
-            int num = Integer.parseInt(number);
+            for (Map.Entry<long[], long[]> entryRange : map.entrySet()) {
 
-            if (map.containsKey(num)) {
+                long min = entryRange.getKey()[0];
+                long max = entryRange.getKey()[1];
 
-                if (sum == 0) {
+                if ((seeds.get(i) >= min && seeds.get(i) <= max) || (seeds.get(i) <= min && seeds.get(i) >= max)) {
 
-                    sum++;
+                    long diff = seeds.get(i) - min;
+                    seeds.set(i, entryRange.getValue()[0] + diff);
 
-                } else {
-
-                    sum *= 2;
+                    break;
 
                 }
             }
         }
 
-        return sum;
+        return seeds;
 
     }
 
     public static void main(String[] args) throws IOException {
 
-        int sum = 0;
-
         BufferedReader bufferedReader = new BufferedReader(new FileReader("input.txt"));
         String input = bufferedReader.readLine();
 
-        while (input != null) {
+        ArrayList<Long> seeds = new ArrayList<>();
 
-            sum += getCardValue(input);
-            input = bufferedReader.readLine();
+        for (String seed : input.split(":")[1].replaceFirst(" ", "").split(" ")) {
+
+            seeds.add(Long.parseLong(seed));
 
         }
 
-        System.out.println(sum);
+        while (input != null) {
+
+            input = bufferedReader.readLine();
+
+            ArrayList<String> ranges = new ArrayList<>();
+
+            while (input != null && !input.isEmpty()) {
+
+                input = bufferedReader.readLine();
+
+                if (input != null && !input.isEmpty()) {
+
+                    ranges.add(input);
+
+                }
+            }
+
+            seeds = traverseMap(ranges, seeds);
+
+        }
+
+        Collections.sort(seeds);
+
+        System.out.println(seeds.get(0));
 
     }
 }
@@ -85,97 +110,117 @@ public class Day4Part1 {
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
-public class Day4Part2 {
+// doesn't work, runs into OutOfMemory Error
 
-    public static HashMap<Integer, Integer> copyMap = new HashMap<>();
+public class Day5Part2 {
 
-    public static int getCardValue(int row, String input) {
+    public static HashMap<long[], long[]> seedMap = new HashMap<>();
 
-        HashMap<Integer, Integer> map = new HashMap<>();
-        int sum = 0;
+    public static ArrayList<Long> traverseMap(ArrayList<String> ranges, ArrayList<Long> seeds) {
 
-        String[] winningNumbers = input.split(":")[1].split("\\|")[0].replaceAll(" {2}", " ").split(" ");
+        HashMap<long[], long[]> map = new HashMap<>();
 
-        String[] yourNumbers = input.split(":")[1].split("\\|")[1].replaceAll(" {2}", " ").split(" ");
+        for (String range : ranges) {
 
-        for (String number : winningNumbers) {
+            long[] sources = new long[3];
 
-            if (number != "") {
+            for (int i = 0; i < 3; i++) {
 
-                int num = Integer.parseInt(number);
+                sources[i] = Long.parseLong(range.split(" ")[i]);
 
-                if (!map.containsKey(num)) {
+            }
 
-                    map.put(num, 1);
+            long[] sourceRange = {sources[1], sources[1] + sources[2]};
+            long[] destinationRange = {sources[0], sources[0] + sources[2]};
+
+            map.put(sourceRange, destinationRange);
+
+        }
+
+        for (int i = 0; i < seeds.size(); i++) {
+
+            for (Map.Entry<long[], long[]> entryRange : map.entrySet()) {
+
+                long min = entryRange.getKey()[0];
+                long max = entryRange.getKey()[1];
+
+                if ((seeds.get(i) >= min && seeds.get(i) <= max) || (seeds.get(i) <= min && seeds.get(i) >= max)) {
+
+                    long diff = seeds.get(i) - min;
+                    seeds.set(i, entryRange.getValue()[0] + diff);
+
+                    break;
 
                 }
             }
         }
 
-        for (String number : yourNumbers) {
-
-            if (number != "") {
-
-                int num = Integer.parseInt(number);
-
-                if (map.containsKey(num)) {
-
-                    sum++;
-
-                }
-            }
-        }
-
-        for (int j = 0; j < copyMap.get(row); j++) {
-
-            for (int i = 1; i <= sum; i++) {
-
-                copyMap.put(row + i, copyMap.get(row + i) + 1);
-
-            }
-        }
-
-        return copyMap.get(row);
+        return seeds;
 
     }
 
     public static void main(String[] args) throws IOException {
 
-        int sum = 0;
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("input.txt"));
+        String input = bufferedReader.readLine();
 
-        BufferedReader bufferedReader2 = new BufferedReader(new FileReader("input.txt"));
-        String input = bufferedReader2.readLine();
+        ArrayList<Long> seeds = new ArrayList<>();
+        ArrayList<Long> seedRanges = new ArrayList<>();
 
-        int row = 0;
+        for (String seed : input.split(":")[1].replaceFirst(" ", "").split(" ")) {
 
-        while (input != null) {
+            seedRanges.add(Long.parseLong(seed));
 
-            row++;
-            copyMap.put(row, 1);
-            input = bufferedReader2.readLine();
+            if (seedRanges.size() == 2) {
 
+                if (seedRanges.get(0) < seedRanges.get(1)) {
+
+                    for (Long i = seedRanges.get(0); i <= seedRanges.get(1); i++) {
+
+                        seeds.add(i);
+
+                    }
+
+                } else {
+
+                    for (Long i = seedRanges.get(1); i <= seedRanges.get(0); i++) {
+
+                        seeds.add(i);
+
+                    }
+                }
+
+                seedRanges = new ArrayList<>();
+
+            }
         }
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("input.txt"));
-        input = bufferedReader.readLine();
-
-        row = 0;
-
         while (input != null) {
-
-            row++;
-            sum += getCardValue(row, input);
-
-            System.out.println(sum);
 
             input = bufferedReader.readLine();
 
+            ArrayList<String> ranges = new ArrayList<>();
+
+            while (input != null && !input.isEmpty()) {
+
+                input = bufferedReader.readLine();
+
+                if (input != null && !input.isEmpty()) {
+
+                    ranges.add(input);
+
+                }
+            }
+
+            seeds = traverseMap(ranges, seeds);
+
         }
 
-        System.out.println(sum);
+        Collections.sort(seeds);
+
+        System.out.println(seeds.get(0));
 
     }
 }
